@@ -1,0 +1,29 @@
+name: archstabms
+channels:
+  - r
+  - anaconda
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconductor-biostrings
+  - cairo
+  - r-base>4.0.0
+  - r-bio3d
+  - r-cairo
+  - r-data.table
+  - r-devtools
+  - r-ggally
+  - r-ggplot2
+  - r-ggrepel
+  - r-hexbin
+  - r-plot3d
+  - r-ppcor
+  - r-reshape2
+  - r-reticulate
+  - r-rocr
+  - r-roxygen2
+  - r-scales
+  # - r-stringr
+  # - r-rcolorbrewer
+  # - r-coin

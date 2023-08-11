@@ -1,0 +1,26 @@
+Package: archstabms
+Title: Analysis scripts to reproduce the figures and results from architecture of protein stability manuscript
+Version: 0.0.0.9000
+Authors@R: c(
+	person("Andre", "Faure", email = "ajfaure@gmail.com", role = c("aut", "cre")))
+Description: "The energetic architecture of protein stability", Faure AJ et al., 2023
+Depends: R (>= 4.0.0)
+Imports:
+	Biostrings,
+	Cairo,
+	bio3d,
+	data.table,
+	GGally,
+	ggplot2,
+	ggrepel,
+	hexbin,
+	plot3D,
+	ppcor,
+	reshape2,
+	reticulate,
+	ROCR,
+	scales
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
