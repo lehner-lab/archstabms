@@ -4,10 +4,17 @@
 \alias{archstabms_coupling_scatter}
 \title{archstabms_coupling_scatter}
 \usage{
-archstabms_coupling_scatter(input_file, outpath, colour_scheme)
+archstabms_coupling_scatter(
+  input_file,
+  trait = "Folding",
+  outpath,
+  colour_scheme
+)
 }
 \arguments{
 \item{input_file}{path to MoCHI thermo model fit results (required)}
+
+\item{trait}{trait name (default:"Folding")}
 
 \item{outpath}{output path for plots and saved objects (required)}
 

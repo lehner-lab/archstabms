@@ -106,6 +106,16 @@ archstabms_structure_metrics <- function(
 		chain = pdb_chain_query)
 	angle_dt <- angle_dt[,.(Pos_ref = as.character(Pos), relative_angle = bfactor)]
 
+	#Get ligand-relative annotations
+	bi_residues <- ligdist_dt[scHAmin_ligand<5,Pos]
+	ss_residues <- as.integer(unique(unlist(dist_dt_scHA[scHAmin<5][Pos1 %in% bi_residues | Pos2 %in% bi_residues, .(Pos1, Pos2)])))
+	ba_residues <- unique(c(bi_residues-1, bi_residues+1))
+	anno_dt <- copy(ligdist_dt[,.(Pos, Pos_ref)])
+	anno_dt[, anno_ligand := 'distal']
+	anno_dt[Pos %in% ba_residues, anno_ligand := 'adjacent']
+	anno_dt[Pos %in% ss_residues, anno_ligand := 'second_shell']
+	anno_dt[Pos %in% bi_residues, anno_ligand := 'binding_interface']
+
 	#Load free energies - order 0
 	dg_dt <- fread(input_file)
 	dg_dt[, Pos_ref := as.character(Pos_ref)]
@@ -121,6 +131,7 @@ archstabms_structure_metrics <- function(
 	dg_dt_list[['1']] <- merge(dg_dt_list[['1']], depth_dt[,.SD,,.SDcols = names(depth_dt)[names(depth_dt)!="Pos"]], by = "Pos_ref", all.x = T)
 	dg_dt_list[['1']] <- merge(dg_dt_list[['1']], ss_dt[,.SD,,.SDcols = names(ss_dt)[names(ss_dt)!="Pos"]], by = "Pos_ref", all.x = T)
 	dg_dt_list[['1']] <- merge(dg_dt_list[['1']], angle_dt[,.SD,,.SDcols = names(angle_dt)[names(angle_dt)!="Pos"]], by = "Pos_ref", all.x = T)
+	dg_dt_list[['1']] <- merge(dg_dt_list[['1']], anno_dt[,.SD,,.SDcols = names(anno_dt)[names(anno_dt)!="Pos"]], by = "Pos_ref", all.x = T)
 
 	#Define position class
 	dg_dt_list[['1']][RSASA<0.25, Pos_class := "core"]
@@ -132,6 +143,9 @@ archstabms_structure_metrics <- function(
   #Secondary structure dict
   ss_dict <- as.list(dg_dt_list[['1']][,SS])
   names(ss_dict) <- as.character(dg_dt_list[['1']][,Pos_ref])
+  #Ligand distance dict
+  ld_dict <- as.list(dg_dt_list[['1']][,scHAmin_ligand])
+  names(ld_dict) <- as.character(dg_dt_list[['1']][,Pos_ref])
 
 	#Load free energies - order 2
 	dg_dt_list[['2']] <- dg_dt[coef_order==2]
@@ -143,6 +157,9 @@ archstabms_structure_metrics <- function(
 		#Define secondary structure
   	dg_dt_list[['2']][, SS1 := ss_dict[[sapply(strsplit(Pos_ref, "_"), '[', 1)]],Pos_ref]
   	dg_dt_list[['2']][, SS2 := ss_dict[[sapply(strsplit(Pos_ref, "_"), '[', 2)]],Pos_ref]
+		#Define ligand distance
+  	dg_dt_list[['2']][, scHAmin_ligand1 := ld_dict[[sapply(strsplit(Pos_ref, "_"), '[', 1)]],Pos_ref]
+  	dg_dt_list[['2']][, scHAmin_ligand2 := ld_dict[[sapply(strsplit(Pos_ref, "_"), '[', 2)]],Pos_ref]
 		#Merge with free energies
 		dg_dt_list[['2']] <- merge(dg_dt_list[['2']], dist_dt[,.SD,,.SDcols = names(dist_dt)[!names(dist_dt) %in% c("Pos1", "Pos2")]], by = c("Pos_ref"), all.x = T)
 	}

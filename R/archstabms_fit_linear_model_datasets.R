@@ -44,5 +44,11 @@ archstabms_fit_linear_model_datasets <- function(
       position_offset = seq_position_offset[[i]],
       load_mochi_data = load_mochi_data,
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_linear_model_", i, "o2"), stagenum=stagenum, base_dir=output_dir))
+    #order 3
+    archstabms_fit_linear_model(
+      mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o3")),
+      position_offset = seq_position_offset[[i]],
+      load_mochi_data = load_mochi_data,
+      outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_linear_model_", i, "o3"), stagenum=stagenum, base_dir=output_dir))
   }
 }

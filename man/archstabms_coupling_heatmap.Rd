@@ -4,10 +4,12 @@
 \alias{archstabms_coupling_heatmap}
 \title{archstabms_coupling_heatmap}
 \usage{
-archstabms_coupling_heatmap(input_file, outpath)
+archstabms_coupling_heatmap(input_file, trait = "Folding", outpath)
 }
 \arguments{
 \item{input_file}{path to MoCHI thermo model fit results (required)}
+
+\item{trait}{trait name (default:"Folding")}
 
 \item{outpath}{output path for plots and saved objects (required)}
 }

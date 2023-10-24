@@ -10,6 +10,7 @@ archstabms__plot_growthrate_violins(
   dataset_name,
   trait,
   suffix = "",
+  threshold,
   colour_scheme
 )
 }
@@ -23,6 +24,8 @@ archstabms__plot_growthrate_violins(
 \item{trait}{trait name and suffix for output files (required)}
 
 \item{suffix}{suffix for output files (default:"")}
+
+\item{threshold}{growth rate threshold (required)}
 
 \item{colour_scheme}{colour scheme file (required)}
 }

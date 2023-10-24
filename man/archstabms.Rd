@@ -5,16 +5,16 @@
 \title{archstabms}
 \usage{
 archstabms(
-  startStage = 1,
-  stopStage = 6,
+  startStage = 2,
+  stopStage = 7,
   base_dir = "/users/project/prj004631/afaure/DMS/Results/archstabms_proj",
   output_dir = ""
 )
 }
 \arguments{
-\item{startStage}{Start at a specified analysis stage (default:1)}
+\item{startStage}{Start at a specified analysis stage (default:2)}
 
-\item{stopStage}{Stop at a specified analysis stage (default:15)}
+\item{stopStage}{Stop at a specified analysis stage (default:7)}
 
 \item{base_dir}{Base directory for all input files (default:NB private CRG server path; change accordingly)}
 

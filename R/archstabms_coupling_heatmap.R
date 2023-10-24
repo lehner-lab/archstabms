@@ -4,6 +4,7 @@
 #' Coupling scatterplots.
 #'
 #' @param input_file path to MoCHI thermo model fit results (required)
+#' @param trait trait name (default:"Folding")
 #' @param outpath output path for plots and saved objects (required)
 #'
 #' @return Nothing
@@ -11,11 +12,20 @@
 #' @import data.table
 archstabms_coupling_heatmap <- function(
 	input_file,
+  trait="Folding",
 	outpath
 	){
 
   #Return if input_file doesn't exist
   if(!file.exists(input_file)){
+    return()
+  }
+
+	#Load free energies
+	dg_dt_singles <- fread(input_file)[coef_order==1]
+
+  #Return if trait doesn't exist
+  if(!trait %in% dg_dt_singles[,trait_name]){
     return()
   }
 
@@ -26,10 +36,10 @@ archstabms_coupling_heatmap <- function(
 	archstabms__create_dir(archstabms_dir = outpath)
 
 	#Load free energies
-	dg_dt_singles <- fread(input_file)[coef_order==1 & trait_name=="Folding",]
+	dg_dt_singles <- dg_dt_singles[trait_name==trait,]
 	ref_ids <- dg_dt_singles[,id_ref]
 	names(ref_ids) <- dg_dt_singles[,Pos_ref]
-	dg_dt <- fread(input_file)[coef_order==2 & trait_name=="Folding"][!duplicated(Pos_ref)]
+	dg_dt <- fread(input_file)[coef_order==2 & trait_name==trait][!duplicated(Pos_ref)]
 
 	#Plot
 	temp_dt <- copy(dg_dt)
@@ -62,7 +72,6 @@ archstabms_coupling_heatmap <- function(
 	  xaxis_vjust=0.5, 
 	  xaxis_size=7, 
 	  yaxis_size=7,
-	  colour_clip=0.2,
 	  na_colour="lightgrey",
 	  xlab = "",
 	  ylab = "")
@@ -78,9 +87,43 @@ archstabms_coupling_heatmap <- function(
 	  xaxis_vjust=0.5, 
 	  xaxis_size=7, 
 	  yaxis_size=7,
-	  colour_clip=0.2,
 	  colour_high='red',
 	  na_colour="lightgrey",
 	  xlab = "",
 	  ylab = "")
+	archstabms__tile_heatmap_wrapper(
+	  input_matrix = heat_mat,
+	  input_matrix_text = heat_txt,
+	  text_size = 5,
+	  output_file = file.path(outpath, "heatmap_order2_clip.pdf"),
+	  cluster = 'none',
+	  width = 7, height = 6,
+	  xaxis_angle=90, 
+	  xaxis_hjust=1, 
+	  xaxis_vjust=0.5, 
+	  xaxis_size=7, 
+	  yaxis_size=7,
+	  na_colour="lightgrey",
+	  xlab = "",
+	  ylab = "",
+	  colour_clip=0.3,
+	  colour_limits = c(-0.3, 0.3))
+	archstabms__tile_heatmap_wrapper(
+	  input_matrix = abs(heat_mat),
+	  input_matrix_text = heat_txt,
+	  text_size = 5,
+	  output_file = file.path(outpath, "heatmap_order2_abs_clip.pdf"),
+	  cluster = 'none',
+	  width = 7, height = 6,
+	  xaxis_angle=90, 
+	  xaxis_hjust=1, 
+	  xaxis_vjust=0.5, 
+	  xaxis_size=7, 
+	  yaxis_size=7,
+	  colour_high='red',
+	  na_colour="lightgrey",
+	  xlab = "",
+	  ylab = "",
+	  colour_clip=0.3,
+	  colour_limits = c(-0.3, 0.3))
 }

@@ -29,56 +29,20 @@ archstabms_coupling_scatter_datasets <- function(
   for(i in dataset_names){
     #order 2
     archstabms_coupling_scatter(
-      input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o2"), "model_coefficients.txt"),
+      input_file = file.path(base_dir, paste0("003", "_archstabms_structure_metrics_", i, "o2"), "model_coefficients.txt"),
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o2"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme)
-    #order 2 -linear
+    #order 2 - linear
     archstabms_coupling_scatter(
-      input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o2-linear"), "model_coefficients.txt"),
+      input_file = file.path(base_dir, paste0("003", "_archstabms_structure_metrics_", i, "o2-linear"), "model_coefficients.txt"),
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o2-linear"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme)
-    # #order 3
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o3"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o3"), stagenum=stagenum, base_dir=output_dir))
-    # #order 3 -linear
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o3-linear"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o3-linear"), stagenum=stagenum, base_dir=output_dir))
-
-    # #order 2 - ensemble
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o2-ensemble"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o2-ensemble"), stagenum=stagenum, base_dir=output_dir))
-    # #order 2 -linear - ensemble
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o2-linear-ensemble"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o2-linear-ensemble"), stagenum=stagenum, base_dir=output_dir))
-    # #order 3 - ensemble
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o3-ensemble"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o3-ensemble"), stagenum=stagenum, base_dir=output_dir))
-    # #order 3 -linear - ensemble
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o3-linear-ensemble"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o3-linear-ensemble"), stagenum=stagenum, base_dir=output_dir))
-
-    # #order 3 - sparse
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o3-sparse"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o3-sparse"), stagenum=stagenum, base_dir=output_dir))
-    # #order 3 -linear - sparse
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o3-sparse-linear"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o3-sparse-linear"), stagenum=stagenum, base_dir=output_dir))
-    # #order 3 - ensemble - sparse
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o3-sparse-ensemble"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o3-sparse-ensemble"), stagenum=stagenum, base_dir=output_dir))
-    # #order 3 -linear - ensemble - sparse
-    # archstabms_coupling_scatter(
-    #   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o3-sparse-linear-ensemble"), "model_coefficients.txt"),
-    #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o3-sparse-linear-ensemble"), stagenum=stagenum, base_dir=output_dir))
+    #order 2 - binding
+    archstabms_coupling_scatter(
+      input_file = file.path(base_dir, paste0("003", "_archstabms_structure_metrics_", i, "o2"), "model_coefficients.txt"),
+      trait = "Binding",
+      outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_scatter_", i, "o2b"), stagenum=stagenum, base_dir=output_dir),
+      colour_scheme = colour_scheme)
   }
 
   ### Coupling partial correlations
@@ -92,8 +56,8 @@ archstabms_coupling_scatter_datasets <- function(
   cor_list <- list()
   for(suffix in c("o2", "o2-linear")){
     for(i in dataset_names){
-      if(!file.exists(file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, suffix), "model_coefficients.txt"))){next}
-      dg_dt <- fread(file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, suffix), "model_coefficients.txt"))[coef_order==2]
+      if(!file.exists(file.path(base_dir, paste0("003", "_archstabms_structure_metrics_", i, suffix), "model_coefficients.txt"))){next}
+      dg_dt <- fread(file.path(base_dir, paste0("003", "_archstabms_structure_metrics_", i, suffix), "model_coefficients.txt"))[coef_order==2]
       dg_dt[, contact := as.numeric(scHAmin<5)]
       #Weighted mean absolute value
       dg_dt[, dddg_abs := sum(abs(.SD[[1]])/.SD[[2]]^2, na.rm = T)/sum(1/.SD[[2]]^2, na.rm = T),Pos_ref,.SDcols = c("mean_kcal/mol", "std_kcal/mol")]
@@ -142,7 +106,7 @@ archstabms_coupling_scatter_datasets <- function(
   ### Coupling linear models - training data 
   ###########################
 
-  dg_dt <- fread(file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", "CM6o2"), "model_coefficients.txt"))
+  dg_dt <- fread(file.path(base_dir, paste0("003", "_archstabms_structure_metrics_", "CM6o2"), "model_coefficients.txt"))
   dg_dt1 <- dg_dt[coef_order==1]
   dg_dt2 <- dg_dt[coef_order==2]
 
@@ -164,6 +128,7 @@ archstabms_coupling_scatter_datasets <- function(
   dg_dt[, energy_sum := energy1+energy2]
   dg_dt[, energy_absdiff := abs(energy1-energy2)]
   all_ids <- dg_dt[,id_ref]
+  all_pos <- dg_dt[,Pos_ref]
 
   #Model - |coupling energy|
   mm <- dg_dt[,.(abs_energy, core, bi, sheet, scHAmin, backbone, WT_hbbb, WT_hbsb, WT_hbss, WT_pc, WT_ps, WT_sb, WT_vdw)]
@@ -184,6 +149,7 @@ archstabms_coupling_scatter_datasets <- function(
     ggplot2::theme_classic()
   # d <- d + ggplot2::geom_abline(linetype = 2)
   ggplot2::ggsave(file.path(outpath, paste0("CM6_coupling_lm_train.pdf")), d, width = 4, height = 3, useDingbats=FALSE)
+  write.table(cbind(mm, plot_dt[,.(observed_energy, predicted_energy)]), file = file.path(outpath, paste0("CM6_coupling_lm_train.txt")), sep = "\t", row.names = F, quote = F)
 
   #Feature significance
   mm_lm_summary <- summary(mm_lm)$coefficients
@@ -203,10 +169,10 @@ archstabms_coupling_scatter_datasets <- function(
       axis.text.y = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
   ggplot2::ggsave(file.path(outpath, "CM6_coupling_lm_coefficients.pdf"), d, width = 4, height = 3, useDingbats=FALSE)
 
-  ### Coupling linear models - test data 
+  ### Coupling linear models - test data - CM1
   ###########################
 
-  dg_dt <- fread(file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", "CM1o2"), "model_coefficients.txt"))
+  dg_dt <- fread(file.path(base_dir, paste0("003", "_archstabms_structure_metrics_", "CM1o2"), "model_coefficients.txt"))
   dg_dt1 <- dg_dt[coef_order==1]
   dg_dt2 <- dg_dt[coef_order==2]
 
@@ -229,7 +195,7 @@ archstabms_coupling_scatter_datasets <- function(
   dg_dt[, energy_absdiff := abs(energy1-energy2)]
 
   #Model matrix - |coupling energy|
-  mm <- dg_dt[!id_ref %in% all_ids,.(abs_energy, core, bi, sheet, scHAmin, backbone, WT_hbbb, WT_hbsb, WT_hbss, WT_pc, WT_ps, WT_sb, WT_vdw, energy_sum, energy_absdiff)]
+  mm <- dg_dt[,.(abs_energy, core, bi, sheet, scHAmin, backbone, WT_hbbb, WT_hbsb, WT_hbss, WT_pc, WT_ps, WT_sb, WT_vdw, energy_sum, energy_absdiff)]
   
   #Model performance on training data
   plot_dt <- data.table(
@@ -244,6 +210,74 @@ archstabms_coupling_scatter_datasets <- function(
     ggplot2::geom_text(data = plot_dt[,.(label = paste("r = ", round(cor(observed_energy, predicted_energy), 2), sep=""))], ggplot2::aes(label=label, x=Inf, y=-Inf, hjust = 1, vjust = 0), color = "black") +
     ggplot2::theme_classic()
   # d <- d + ggplot2::geom_abline(linetype = 2)
-  ggplot2::ggsave(file.path(outpath, paste0("CM6_coupling_lm_test.pdf")), d, width = 3, height = 3, useDingbats=FALSE)
+  ggplot2::ggsave(file.path(outpath, paste0("CM6_coupling_lm_test_CM1.pdf")), d, width = 3, height = 3, useDingbats=FALSE)
+
+  #Model matrix - |coupling energy|
+  mm <- dg_dt[!id_ref %in% all_ids,.(abs_energy, core, bi, sheet, scHAmin, backbone, WT_hbbb, WT_hbsb, WT_hbss, WT_pc, WT_ps, WT_sb, WT_vdw, energy_sum, energy_absdiff, id_ref)]
+  
+  #Model performance on training data - no shared couplings with CM6
+  plot_dt <- data.table(
+    observed_energy = mm[,abs_energy],
+    predicted_energy = predict(mm_lm, mm),
+    id_ref = mm[,id_ref])
+  d <- ggplot2::ggplot(plot_dt,ggplot2::aes(observed_energy, predicted_energy)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_smooth(method = "lm", formula = 'y~x', color = colour_scheme[["shade 0"]][1], se = T) +
+    # ggplot2::scale_fill_gradientn(colours = c("white", "black")) +
+    ggplot2::xlab(expression("Observed |Folding "*Delta*Delta*Delta*"G|")) +
+    ggplot2::ylab(expression("Predicted |Folding "*Delta*Delta*Delta*"G|")) +
+    ggplot2::geom_text(data = plot_dt[,.(label = paste("r = ", round(cor(observed_energy, predicted_energy), 2), sep=""))], ggplot2::aes(label=label, x=Inf, y=-Inf, hjust = 1, vjust = 0), color = "black") +
+    ggplot2::theme_classic()
+  # d <- d + ggplot2::geom_abline(linetype = 2)
+  ggplot2::ggsave(file.path(outpath, paste0("CM6_coupling_lm_test_CM1_noshare.pdf")), d, width = 3, height = 3, useDingbats=FALSE)
+  write.table(cbind(mm, plot_dt[,.(observed_energy, predicted_energy)]), file = file.path(outpath, paste0("CM6_coupling_lm_test_CM1_noshare.txt")), sep = "\t", row.names = F, quote = F)
+  d <- ggplot2::ggplot(plot_dt,ggplot2::aes(observed_energy, predicted_energy)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_smooth(method = "lm", formula = 'y~x', color = colour_scheme[["shade 0"]][1], se = T) +
+    # ggplot2::scale_fill_gradientn(colours = c("white", "black")) +
+    ggplot2::xlab(expression("Observed |Folding "*Delta*Delta*Delta*"G|")) +
+    ggplot2::ylab(expression("Predicted |Folding "*Delta*Delta*Delta*"G|")) +
+    ggplot2::geom_text(data = plot_dt[,.(label = paste("r = ", round(cor(observed_energy, predicted_energy), 2), sep=""))], ggplot2::aes(label=label, x=Inf, y=-Inf, hjust = 1, vjust = 0), color = "black") +
+    ggrepel::geom_text_repel(ggplot2::aes(label = id_ref), show.legend = T, 
+      max.overlaps = 10) +
+    ggplot2::theme_classic()
+  # d <- d + ggplot2::geom_abline(linetype = 2)
+  ggplot2::ggsave(file.path(outpath, paste0("CM6_coupling_lm_test_CM1_noshare_ids.pdf")), d, width = 3, height = 3, useDingbats=FALSE)
+
+  #Model matrix - |coupling energy|
+  mm <- dg_dt[!Pos_ref %in% all_pos,.(abs_energy, core, bi, sheet, scHAmin, backbone, WT_hbbb, WT_hbsb, WT_hbss, WT_pc, WT_ps, WT_sb, WT_vdw, energy_sum, energy_absdiff)]
+  
+  #Model performance on training data - no shared couplings with CM6
+  plot_dt <- data.table(
+    observed_energy = mm[,abs_energy],
+    predicted_energy = predict(mm_lm, mm))
+  d <- ggplot2::ggplot(plot_dt,ggplot2::aes(observed_energy, predicted_energy)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_smooth(method = "lm", formula = 'y~x', color = colour_scheme[["shade 0"]][1], se = T) +
+    # ggplot2::scale_fill_gradientn(colours = c("white", "black")) +
+    ggplot2::xlab(expression("Observed |Folding "*Delta*Delta*Delta*"G|")) +
+    ggplot2::ylab(expression("Predicted |Folding "*Delta*Delta*Delta*"G|")) +
+    ggplot2::geom_text(data = plot_dt[,.(label = paste("r = ", round(cor(observed_energy, predicted_energy), 2), sep=""))], ggplot2::aes(label=label, x=Inf, y=-Inf, hjust = 1, vjust = 0), color = "black") +
+    ggplot2::theme_classic()
+  # d <- d + ggplot2::geom_abline(linetype = 2)
+  ggplot2::ggsave(file.path(outpath, paste0("CM6_coupling_lm_test_CM1_nosharepos.pdf")), d, width = 3, height = 3, useDingbats=FALSE)
+
+  #Model matrix - |coupling energy|
+  mm <- dg_dt[Pos_ref %in% all_pos & !id_ref %in% all_ids,.(abs_energy, core, bi, sheet, scHAmin, backbone, WT_hbbb, WT_hbsb, WT_hbss, WT_pc, WT_ps, WT_sb, WT_vdw, energy_sum, energy_absdiff)]
+  
+  #Model performance on training data - no shared couplings with CM6
+  plot_dt <- data.table(
+    observed_energy = mm[,abs_energy],
+    predicted_energy = predict(mm_lm, mm))
+  d <- ggplot2::ggplot(plot_dt,ggplot2::aes(observed_energy, predicted_energy)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_smooth(method = "lm", formula = 'y~x', color = colour_scheme[["shade 0"]][1], se = T) +
+    # ggplot2::scale_fill_gradientn(colours = c("white", "black")) +
+    ggplot2::xlab(expression("Observed |Folding "*Delta*Delta*Delta*"G|")) +
+    ggplot2::ylab(expression("Predicted |Folding "*Delta*Delta*Delta*"G|")) +
+    ggplot2::geom_text(data = plot_dt[,.(label = paste("r = ", round(cor(observed_energy, predicted_energy), 2), sep=""))], ggplot2::aes(label=label, x=Inf, y=-Inf, hjust = 1, vjust = 0), color = "black") +
+    ggplot2::theme_classic()
+  # d <- d + ggplot2::geom_abline(linetype = 2)
+  ggplot2::ggsave(file.path(outpath, paste0("CM6_coupling_lm_test_CM1_shareposonly.pdf")), d, width = 3, height = 3, useDingbats=FALSE)
 
 }

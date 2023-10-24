@@ -27,7 +27,12 @@ archstabms_coupling_heatmap_datasets <- function(
   for(i in dataset_names){
     #order 2
     archstabms_coupling_heatmap(
-      input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_", i, "o2"), "model_coefficients.txt"),
+      input_file = file.path(base_dir, paste0("003", "_archstabms_structure_metrics_", i, "o2"), "model_coefficients.txt"),
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_heatmap_", i, "o2"), stagenum=stagenum, base_dir=output_dir))
+    #order 2 - binding
+    archstabms_coupling_heatmap(
+      input_file = file.path(base_dir, paste0("003", "_archstabms_structure_metrics_", i, "o2"), "model_coefficients.txt"),
+      trait = "Binding",
+      outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_coupling_heatmap_", i, "o2b"), stagenum=stagenum, base_dir=output_dir))
   }
 }

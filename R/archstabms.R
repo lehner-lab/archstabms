@@ -3,22 +3,22 @@
 #'
 #' Main analysis script.
 #'
-#' @param startStage Start at a specified analysis stage (default:1)
-#' @param stopStage Stop at a specified analysis stage (default:15)
+#' @param startStage Start at a specified analysis stage (default:2)
+#' @param stopStage Stop at a specified analysis stage (default:7)
 #' @param base_dir Base directory for all input files (default:NB private CRG server path; change accordingly)
 #' @param output_dir Output directory for all output files (default:same as base_dir)
 #'
 #' @return Nothing
 #' @export
 archstabms <- function(
-	startStage = 1,
-	stopStage = 6,
+	startStage = 2,
+	stopStage = 7,
 	base_dir = "/users/project/prj004631/afaure/DMS/Results/archstabms_proj",
 	output_dir = ""
 	){
 
-	# startStage=1
-	# stopStage=6
+	# startStage=5
+	# stopStage=5
 	# base_dir = "/users/project/prj004631/afaure/DMS/Results/archstabms_proj"
 	# output_dir = ""
 
@@ -64,100 +64,71 @@ archstabms <- function(
 		output_dir <- base_dir
 	}
 
-	### Fit thermo models
-	###########################
-
-	# stagenum <- 0
-	# archstabms_fit_thermo_model(
-	#   base_dir = base_dir,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
-
-	### Fit linear models
+	### Library design
 	###########################
 
 	stagenum <- 0
-	# archstabms_fit_linear_model_datasets(
-	# 	dataset_names = c(
-	# 		"CM1",
-	# 		"CM2",
-	# 		"CM3",
-	# 		"CM4",
-	# 		"CM5",
-	# 		"CM1345",
-	# 		"CM6"),
-	# 	seq_position_offset = list(
-	# 		"CM1" = 9,
-	# 		"CM2" = 25,
-	# 		"CM3" = 0,
-	# 		"CM4" = 0,
-	# 		"CM5" = 2,
-	# 		"CM1345" = 0,
-	# 		"CM6" = 0),
-	#   base_dir = base_dir,
-	# 	output_dir = output_dir,
-	# 	stagenum = stagenum,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
+	archstabms_library_design(
+		base_dir = base_dir,
+		output_dir = output_dir,
+		stagenum = stagenum,
+		colour_scheme = colour_scheme,
+		execute = (first_stage <= stagenum & last_stage >= stagenum))
 
-	# archstabms_ddPCA_singlebackground_linear_model_datasets(
-	# 	dataset_names = c(
-	# 		"CM1",
-	# 		"CM2",
-	# 		"CM3",
-	# 		"CM4",
-	# 		"CM5",
-	# 		"CM1345",
-	# 		"CM6"),
-	# 	seq_position_offset = list(
-	# 		"CM1" = 9,
-	# 		"CM2" = 25,
-	# 		"CM3" = 0,
-	# 		"CM4" = 0,
-	# 		"CM5" = 2,
-	# 		"CM1345" = 0,
-	# 		"CM6" = 0),
-	#   base_dir = base_dir,
-	# 	output_dir = output_dir,
-	# 	stagenum = stagenum,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
+	### Fit linear models Fit linear models
+	###########################
 
-	# archstabms_ddPCA_linear_model_datasets(
-	# 	dataset_names = c(
-	# 		"CM1",
-	# 		"CM2",
-	# 		"CM3",
-	# 		"CM4",
-	# 		"CM5",
-	# 		"CM1345",
-	# 		"CM6"),
-	# 	seq_position_offset = list(
-	# 		"CM1" = 9,
-	# 		"CM2" = 25,
-	# 		"CM3" = 0,
-	# 		"CM4" = 0,
-	# 		"CM5" = 2,
-	# 		"CM1345" = 0,
-	# 		"CM6" = 0),
-	#   base_dir = base_dir,
-	# 	output_dir = output_dir,
-	# 	stagenum = stagenum,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
+	stagenum <- 1
+	archstabms_fit_linear_model_datasets(
+		dataset_names = c(
+			"CM1",
+			"CM2",
+			"CM6"),
+		seq_position_offset = list(
+			"CM1" = 9,
+			"CM2" = 25,
+			"CM6" = 0),
+	  base_dir = base_dir,
+		output_dir = output_dir,
+		stagenum = stagenum,
+	  execute = (first_stage <= stagenum & last_stage >= stagenum))
+
+	archstabms_ddPCA_singlebackground_linear_model_datasets(
+		dataset_names = c(
+			"CM1",
+			"CM2",
+			"CM6"),
+		seq_position_offset = list(
+			"CM1" = 9,
+			"CM2" = 25,
+			"CM6" = 0),
+	  base_dir = base_dir,
+		output_dir = output_dir,
+		stagenum = stagenum,
+	  execute = (first_stage <= stagenum & last_stage >= stagenum))
+
+	archstabms_ddPCA_linear_model_datasets(
+		dataset_names = c(
+			"CM1",
+			"CM2",
+			"CM6"),
+		seq_position_offset = list(
+			"CM1" = 9,
+			"CM2" = 25,
+			"CM6" = 0),
+	  base_dir = base_dir,
+		output_dir = output_dir,
+		stagenum = stagenum,
+	  execute = (first_stage <= stagenum & last_stage >= stagenum))
 
 	archstabms_ddPCA_biophysical_model_datasets(
 		dataset_names = c(
 			"CM1",
 			"CM2",
-			"CM3",
-			"CM4",
-			"CM5",
-			"CM1345",
 			"CM6"),
 		seq_position_offset = list(
 			"CM1" = 9,
 			"CM2" = 25,
-			"CM3" = 0,
-			"CM4" = 0,
-			"CM5" = 2,
-			"CM1345" = 0,
 			"CM6" = 0),
 	  base_dir = base_dir,
 		output_dir = output_dir,
@@ -167,16 +138,12 @@ archstabms <- function(
 	### Evaluate thermo model results
 	###########################
 
-	stagenum <- 1
+	stagenum <- 2
 	archstabms_thermo_model_results_datasets(
 		dataset_names = c(
 			"CM1",
 			"CM1binding",
 			"CM2",
-			"CM3",
-			"CM4",
-			"CM5",
-			"CM1345",
 			"CM6"),
 		literature_free_energies = file.path(base_dir, "Data", "in_vitro", "GRB2_literature_free_energies.txt"),
 		ddPCA_free_energies = file.path(base_dir, "Data", "mochi", "ddPCA", "mochi__fit_tmodel_3state_sparse_dimsum128", "model_weights_0.txt"),
@@ -189,16 +156,12 @@ archstabms <- function(
 	### Add 3D structure metrics
 	###########################
 
-	stagenum <- 2
+	stagenum <- 3
 	archstabms_structure_metrics_datasets(
 		dataset_names = c(
 			"CM1",
 			"CM1binding",
 			"CM2",
-			"CM3",
-			"CM4",
-			"CM5",
-			"CM1345",
 			"CM6"),
 		pdb_file = file.path(base_dir, "Data", "pdb", "2vwf.pdb"),
 		base_dir = base_dir,
@@ -209,16 +172,12 @@ archstabms <- function(
 	### Coupling scatterplots
 	###########################
 
-	stagenum <- 3
+	stagenum <- 4
 	archstabms_coupling_scatter_datasets(
 		dataset_names = c(
 			"CM1",
 			"CM1binding",
 			"CM2",
-			"CM3",
-			"CM4",
-			"CM5",
-			"CM1345",
 			"CM6"),
 		base_dir = base_dir,
 		output_dir = output_dir,
@@ -229,16 +188,12 @@ archstabms <- function(
 	### Fitness plots
 	###########################
 
-	stagenum <- 4
+	stagenum <- 5
 	archstabms_fitness_plots_datasets(
 		dataset_names = c(
 			"CM1",
 			"CM1binding",
-			# "CM2",
-			# "CM3",
-			# "CM4",
-			# "CM5",
-			# "CM1345",
+			"CM2",
 			"CM6"),
 		base_dir = base_dir,
 		output_dir = output_dir,
@@ -249,122 +204,30 @@ archstabms <- function(
 	### Coupling heatmaps
 	###########################
 
-	stagenum <- 5
+	stagenum <- 6
 	archstabms_coupling_heatmap_datasets(
 		dataset_names = c(
 			"CM1",
 			"CM1binding",
 			"CM2",
-			"CM3",
-			"CM4",
-			"CM5",
-			"CM1345",
 			"CM6"),
 		base_dir = base_dir,
 		output_dir = output_dir,
 		stagenum = stagenum,
 		execute = (first_stage <= stagenum & last_stage >= stagenum))
 
-	### Coupling predictive decay
+	### Binding fitness plots
 	###########################
 
-	stagenum <- 6
-	archstabms_coupling_decay_datasets(
+	stagenum <- 7
+	archstabms_binding_plots_datasets(
 		dataset_names = c(
-			# "CM1",
-			# "CM2",
-			# "CM3",
-			# "CM4",
-			# "CM5",
-			# "CM1345",
-			"CM6"),
+			"CM1binding"),
 		base_dir = base_dir,
 		output_dir = output_dir,
 		stagenum = stagenum,
 		colour_scheme = colour_scheme,
 		execute = (first_stage <= stagenum & last_stage >= stagenum))
 
-	### Plot fitness heatmaps
-	###########################
-
-	# stagenum <- 4
-	# #GB1
-	# archstabms_fitness_heatmaps(
-	#   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_GB1"), "dg_singles.txt"),
-	#   input_file_fitness = file.path(base_dir, "Data", "fitness", "GB1"),
-	#   domain_name = "GB1",
-	#   outpath = archstabms__format_dir(dir_suffix="_archstabms_fitness_heatmaps_GB1", stagenum=stagenum, base_dir=output_dir),
-	#   colour_scheme = colour_scheme,
-	#   plot_width = 11,
-	#   plot_traits = "Binding",
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
-	# #PSD95-PDZ3
-	# archstabms_fitness_heatmaps(
-	#   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_PSD95-PDZ3"), "dg_singles.txt"),
-	#   input_file_fitness = file.path(base_dir, "Data", "fitness", "PSD95-PDZ3"),
-	#   input_file_MSA = file.path(base_dir, "Data", "MSA", "PSD95-PDZ3", "frequencies.csv"),
-	#   domain_name = "PSD95 PDZ3",
-	#   outpath = archstabms__format_dir(dir_suffix="_archstabms_fitness_heatmaps_PSD95-PDZ3", stagenum=stagenum, base_dir=output_dir),
-	#   colour_scheme = colour_scheme,
-	#   plot_width = 15,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
-	# #GRB2-SH3
-	# archstabms_fitness_heatmaps(
-	#   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_GRB2-SH3"), "dg_singles.txt"),
-	#   input_file_fitness = file.path(base_dir, "Data", "fitness", "GRB2-SH3"),
-	#   input_file_MSA = file.path(base_dir, "Data", "MSA", "GRB2-SH3", "frequencies.csv"),
-	#   domain_name = "GRB2 SH3",
-	#   outpath = archstabms__format_dir(dir_suffix="_archstabms_fitness_heatmaps_GRB2-SH3", stagenum=stagenum, base_dir=output_dir),
-	#   colour_scheme = colour_scheme,
-	#   plot_width = 11,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
-
-	### Plot free energy scatterplots
-	###########################
-
-	# stagenum <- 5
-	# #All domains
-	# archstabms_free_energy_scatterplots(
-	#   input_list = list(
-	#     "GB1" = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_GB1"), "dg_singles.txt"),
-	#     "PSD95-PDZ3" = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_PSD95-PDZ3"), "dg_singles.txt"),
-	#     "GRB2-SH3" = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_GRB2-SH3"), "dg_singles.txt")),
-	#   input_MSA_list = list(
-	#     "GB1" = file.path(base_dir, "Data", "MSA", "GB1", "frequencies.csv"),
-	#     "PSD95-PDZ3" = file.path(base_dir, "Data", "MSA", "PSD95-PDZ3", "frequencies.csv"),
-	#     "GRB2-SH3" = file.path(base_dir, "Data", "MSA", "GRB2-SH3", "frequencies.csv")
-	#   ),
-	#   outpath = archstabms__format_dir(dir_suffix="_archstabms_free_energy_scatterplots", stagenum=stagenum, base_dir=output_dir),
-	#   colour_scheme = colour_scheme,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
-
-	### Plot free energy heatmaps
-	###########################
-
-	# stagenum <- 6
-	# #GB1
-	# archstabms_free_energy_heatmaps(
-	#   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_GB1"), "dg_singles.txt"),
-	#   domain_name = "GB1",
-	#   outpath = archstabms__format_dir(dir_suffix="_archstabms_free_energy_heatmaps_GB1", stagenum=stagenum, base_dir=output_dir),
-	#   colour_scheme = colour_scheme,
-	#   plot_width = 11,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
-	# #PSD95-PDZ3
-	# archstabms_free_energy_heatmaps(
-	#   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_PSD95-PDZ3"), "dg_singles.txt"),
-	#   domain_name = "PSD95 PDZ3",
-	#   outpath = archstabms__format_dir(dir_suffix="_archstabms_free_energy_heatmaps_PSD95-PDZ3", stagenum=stagenum, base_dir=output_dir),
-	#   colour_scheme = colour_scheme,
-	#   plot_width = 15,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
-	# #GRB2-SH3
-	# archstabms_free_energy_heatmaps(
-	#   input_file = file.path(base_dir, paste0("002", "_archstabms_structure_metrics_GRB2-SH3"), "dg_singles.txt"),
-	#   domain_name = "GRB2 SH3",
-	#   outpath = archstabms__format_dir(dir_suffix="_archstabms_free_energy_heatmaps_GRB2-SH3", stagenum=stagenum, base_dir=output_dir),
-	#   colour_scheme = colour_scheme,
-	#   plot_width = 11,
-	#   execute = (first_stage <= stagenum & last_stage >= stagenum))
-
 }
+

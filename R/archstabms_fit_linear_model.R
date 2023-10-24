@@ -18,6 +18,11 @@ archstabms_fit_linear_model <- function(
   outpath
   ){
 
+  #Return if mochi_outpath doesn't exist
+  if(!dir.exists(mochi_outpath)){
+    return()
+  }
+
   #Domain name
   domain_name <- rev(unlist(strsplit(basename(outpath), "_")))[1]
 
@@ -31,6 +36,12 @@ archstabms_fit_linear_model <- function(
   mochi_dict <- load_mochi_data(file.path(mochi_outpath, "task_1", "saved_models", "data.pbz2"))
   mm <- data.table(py_to_r(mochi_dict[['Xohi']]))
   mm[, fitness := data.table(py_to_r(mochi_dict[['fitness']])[,'fitness'])]
+
+  #Number of genotypes per double
+  if(sum(grepl("_", names(mm)))!=0){
+    ng_doubles <- mm[,median(apply(.SD, 2, sum)),,.SDcols = grepl("_", names(mm))]
+    print(paste0("Number of genotypes per double (", basename(mochi_outpath), "): ", ng_doubles))
+  }
 
   #Variant table
   vtable <- data.table(py_to_r(mochi_dict[['vtable']]))

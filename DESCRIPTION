@@ -8,6 +8,7 @@ Depends: R (>= 4.0.0)
 Imports:
 	Biostrings,
 	Cairo,
+	coin,
 	bio3d,
 	data.table,
 	GGally,
@@ -19,7 +20,8 @@ Imports:
 	reshape2,
 	reticulate,
 	ROCR,
-	scales
+	scales,
+	seqinr
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

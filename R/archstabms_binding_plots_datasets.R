@@ -1,7 +1,7 @@
 
-#' archstabms_fitness_plots_datasets
+#' archstabms_binding_plots_datasets
 #'
-#' Fitness plots for multiple datasets.
+#' Coupling scatterplots for multiple datasets.
 #'
 #' @param dataset_names character vector of dataset names (required)
 #' @param base_dir Base directory (required)
@@ -12,7 +12,7 @@
 #'
 #' @return Nothing
 #' @export
-archstabms_fitness_plots_datasets <- function(
+archstabms_binding_plots_datasets <- function(
   dataset_names,
   base_dir,
   output_dir,
@@ -27,10 +27,19 @@ archstabms_fitness_plots_datasets <- function(
   }
 
   for(i in dataset_names){
-    archstabms_fitness_plots(
+    #1st order coefficient
+    archstabms_binding_plots(
       dataset_name = i,
+      coef_order = 1,
       base_dir = base_dir,
       colour_scheme = colour_scheme,
-      outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_fitness_plots_", i), stagenum=stagenum, base_dir=output_dir))
+      outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_binding_plots_", i, "o1"), stagenum=stagenum, base_dir=output_dir))
+    #2nd order coefficient
+    archstabms_binding_plots(
+      dataset_name = i,
+      coef_order = 2,
+      base_dir = base_dir,
+      colour_scheme = colour_scheme,
+      outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_binding_plots_", i, "o2"), stagenum=stagenum, base_dir=output_dir))
   }
 }
