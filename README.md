@@ -1,4 +1,4 @@
-Welcome to the GitHub repository for the following publication: [The energetic architecture of protein stability (Faure AJ et al., 2023)]()
+Welcome to the GitHub repository for the following publication: [The genetic architecture of protein stability (Faure AJ et al., 2023)](https://www.biorxiv.org/content/10.1101/2023.10.27.564339)
 
 Here you'll find an R package with all scripts to reproduce the figures and results from the computational analyses described in the paper.
 
@@ -33,7 +33,7 @@ devtools::install_github("lehner-lab/archstabms")
 
 # Usage
 
-The top-level function **archstabms()** is the recommended entry point to the pipeline and by default reproduces the figures and results from the computational analyses described in the following publication: [The energetic architecture of protein stability (Faure AJ et al., 2023)](). See [Required Data](#required-data) for instructions on how to obtain all required data and miscellaneous files before running the pipeline. Expected run time <20min.
+The top-level function **archstabms()** is the recommended entry point to the pipeline and by default reproduces the figures and results from the computational analyses described in the following publication: [The genetic architecture of protein stability (Faure AJ et al., 2023)](https://www.biorxiv.org/content/10.1101/2023.10.27.564339). See [Required Data](#required-data) for instructions on how to obtain all required data and miscellaneous files before running the pipeline. Expected run time <20min.
 
 ```
 library(archstabms)
