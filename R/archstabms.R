@@ -17,7 +17,7 @@ archstabms <- function(
 	output_dir = ""
 	){
 
-	# startStage=5
+	# startStage=0
 	# stopStage=5
 	# base_dir = "/users/project/prj004631/afaure/DMS/Results/archstabms_proj"
 	# output_dir = ""

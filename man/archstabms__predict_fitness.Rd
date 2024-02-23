@@ -9,7 +9,8 @@ archstabms__predict_fitness(
   dataset_name,
   folding_energy,
   binding_energy,
-  RT = 0.001987 * (273 + 24)
+  RT = 0.001987 * (273 + 24),
+  phenotype_names = c("Abundance", "Binding")
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ archstabms__predict_fitness(
 \item{binding_energy}{binding energies for 3-state model (required for binding fitness prediction)}
 
 \item{RT}{constant (default:0.001987*(273+24))}
+
+\item{phenotype_names}{Phenotype names (default:c("Abundance", "Binding"))}
 }
 \value{
 A list with folding and binding fitness predictions

@@ -91,30 +91,82 @@ archstabms_library_design <- function(
     colour_scheme = colour_scheme,
     outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_library_design_random_PSD95"), stagenum=stagenum, base_dir=output_dir))
 
-  # #Explore all first mutations up to maximum order
-  # exp_results <- archstabms__optimal_library_design(
-  #   ddpca_outpath = file.path(base_dir, "Data", "mochi", "ddPCA_PDZ", "mochi__fit_tmodel_3state_sparse_dimsum128"),
-  #   position_offset = 310,
-  #   fitness_abundance_file = file.path(base_dir, "Data", "fitness", "ddPCA_PDZ", "JD_PDZ_NM2_stabilityPCA_dimsum128_filtered_fitness_replicates.RData"),
-  #   fitness_binding_file = file.path(base_dir, "Data", "fitness", "ddPCA_PDZ", "JD_PDZ_NM2_bindingPCA_dimsum128_filtered_fitness_replicates.RData"),
-  #   max_num_mutants = 84,
-  #   min_num_doubles = 1,
-  #   colour_scheme = colour_scheme,
-  #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_library_design_explore_PSD95"), stagenum=stagenum, base_dir=output_dir))
+  #Explore all first mutations up to maximum order
+  exp_results <- archstabms__optimal_library_design(
+    ddpca_outpath = file.path(base_dir, "Data", "mochi", "ddPCA_PDZ", "mochi__fit_tmodel_3state_sparse_dimsum128"),
+    position_offset = 310,
+    fitness_abundance_file = file.path(base_dir, "Data", "fitness", "ddPCA_PDZ", "JD_PDZ_NM2_stabilityPCA_dimsum128_filtered_fitness_replicates.RData"),
+    fitness_binding_file = file.path(base_dir, "Data", "fitness", "ddPCA_PDZ", "JD_PDZ_NM2_bindingPCA_dimsum128_filtered_fitness_replicates.RData"),
+    max_num_mutants = 77,
+    explore_positions = c(311:348, 357:394),
+    min_num_doubles = 1,
+    colour_scheme = colour_scheme,
+    outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_library_design_explore_PSD95"), stagenum=stagenum, base_dir=output_dir))
 
-  # #Optimised library design
-  # opt_results <- archstabms__optimal_library_design(
-  #   ddpca_outpath = file.path(base_dir, "Data", "mochi", "ddPCA_PDZ", "mochi__fit_tmodel_3state_sparse_dimsum128"),
-  #   position_offset = 310,
-  #   fitness_abundance_file = file.path(base_dir, "Data", "fitness", "ddPCA_PDZ", "JD_PDZ_NM2_stabilityPCA_dimsum128_filtered_fitness_replicates.RData"),
-  #   fitness_binding_file = file.path(base_dir, "Data", "fitness", "ddPCA_PDZ", "JD_PDZ_NM2_bindingPCA_dimsum128_filtered_fitness_replicates.RData"),
-  #   max_num_mutants = exp_results[['optimal_num_mutants']], 
-  #   # max_num_mutants = 66, 
-  #   explore_mutations = exp_results[['optimal_first_mut']],
-  #   # explore_mutations = "G319S",
-  #   sample_size = 10000,
-  #   min_num_doubles = 1,
-  #   colour_scheme = colour_scheme,
-  #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_library_design_optimise_PSD95"), stagenum=stagenum, base_dir=output_dir))
+  #Optimised library design
+  opt_results <- archstabms__optimal_library_design(
+    ddpca_outpath = file.path(base_dir, "Data", "mochi", "ddPCA_PDZ", "mochi__fit_tmodel_3state_sparse_dimsum128"),
+    position_offset = 310,
+    fitness_abundance_file = file.path(base_dir, "Data", "fitness", "ddPCA_PDZ", "JD_PDZ_NM2_stabilityPCA_dimsum128_filtered_fitness_replicates.RData"),
+    fitness_binding_file = file.path(base_dir, "Data", "fitness", "ddPCA_PDZ", "JD_PDZ_NM2_bindingPCA_dimsum128_filtered_fitness_replicates.RData"),
+    max_num_mutants = exp_results[['optimal_num_mutants']], 
+    # max_num_mutants = 60, 
+    explore_mutations = exp_results[['optimal_first_mut']],
+    # explore_mutations = "P394A",
+    explore_positions = c(311:348, 357:394),
+    sample_size = 10000,
+    min_num_doubles = 1,
+    colour_scheme = colour_scheme,
+    outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_library_design_optimise_PSD95"), stagenum=stagenum, base_dir=output_dir))
+
+  ### SRC 1
+  ###########################
+
+  #Explore all first mutations up to maximum order
+  exp_results <- archstabms__optimal_library_design_src(
+    mochi_outpath = file.path(base_dir, "Data", "mochi", "ddPCA_SRC"),
+    position_offset = 0,
+    max_num_mutants = 15,
+    explore_positions = 64:85,
+    min_num_doubles = 7,
+    colour_scheme = colour_scheme,
+    outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_library_design_explore_SRC_64-85"), stagenum=stagenum, base_dir=output_dir))
+
+  #Optimised library design
+  opt_results <- archstabms__optimal_library_design_src(
+    mochi_outpath = file.path(base_dir, "Data", "mochi", "ddPCA_SRC"),
+    position_offset = 0,
+    max_num_mutants = 15, 
+    explore_mutations = exp_results[['optimal_first_mut']],
+    explore_positions = 64:85,
+    min_num_doubles = 7,
+    sample_size = 10000,
+    colour_scheme = colour_scheme,
+    outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_library_design_optimise_SRC_64-85"), stagenum=stagenum, base_dir=output_dir))
+
+  ### SRC 2
+  ###########################
+
+  #Explore all first mutations up to maximum order
+  exp_results <- archstabms__optimal_library_design_src(
+    mochi_outpath = file.path(base_dir, "Data", "mochi", "ddPCA_SRC"),
+    position_offset = 0,
+    max_num_mutants = 15,
+    explore_positions = 183:204,
+    min_num_doubles = 7,
+    colour_scheme = colour_scheme,
+    outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_library_design_explore_SRC_183-204"), stagenum=stagenum, base_dir=output_dir))
+
+  #Optimised library design
+  opt_results <- archstabms__optimal_library_design_src(
+    mochi_outpath = file.path(base_dir, "Data", "mochi", "ddPCA_SRC"),
+    position_offset = 0,
+    max_num_mutants = 15, 
+    explore_mutations = exp_results[['optimal_first_mut']],
+    explore_positions = 183:204,
+    min_num_doubles = 7,
+    sample_size = 10000,
+    colour_scheme = colour_scheme,
+    outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_library_design_optimise_SRC_183-204"), stagenum=stagenum, base_dir=output_dir))
 
 }
