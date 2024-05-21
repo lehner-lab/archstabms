@@ -46,9 +46,6 @@ archstabms_thermo_model_results <- function(
   gas_constant <- 0.001987
   RT <- gas_constant*(273+temperature)
 
-  # #Load model data
-  # fitness_dt <- fread(file.path(mochi_outpath, 'task_1', 'predictions', "predicted_phenotypes_all.txt"))
-
   #Load model results
   model_results <- archstabms__get_model_results(
     input_folder = mochi_outpath, 
@@ -109,14 +106,6 @@ archstabms_thermo_model_results <- function(
       colour_scheme = colour_scheme)
   }
 
-  # #Plot folding versus binding energy coloured by fraction bound showing isochores for arbitrary double mutant
-  # archstabms__plot_isochore_fraction_bound(
-  #   mochi_outpath = mochi_outpath,
-  #   input_dt = pred_dt_conf, 
-  #   RT = RT,
-  #   report_outpath = outpath,
-  #   colour_scheme = colour_scheme)
-
   #Plot correlation with ddPCA data - folding ddGs
   archstabms__plot_ddPCAvalidation_scatter(
     input_dt = coef_dt, 
@@ -137,22 +126,6 @@ archstabms_thermo_model_results <- function(
       RT = RT)
   }
 
-  # #Plot correlation with validation data
-  # archstabms__plot_validation_scatter(
-  #   input_dt = pred_dt_conf, 
-  #   lit_inpath = literature_free_energies, 
-  #   report_outpath = outpath, 
-  #   highlight_colour = colour_scheme[["shade 0"]][[1]],
-  #   RT = RT, 
-  #   position_offset = position_offset)
-
-  # #Add id with reference amino acid position
-  # pred_dt_conf[, id_ref := archstabms__get_reference_id(pred_dt_conf[,.(id, mut_order)], position_offset)]
-
-  # #Add residue position for singles
-  # pred_dt_conf[mut_order==1, Pos := as.integer(substr(id, 2, nchar(id)-1))]
-  # pred_dt_conf[mut_order==1, Pos_ref := as.integer(substr(id_ref, 2, nchar(id_ref)-1))]
-
   #Save dGs and ddGs
   write.table(pred_dt, 
     file = file.path(outpath, "model_predictions.txt"), 
@@ -160,16 +133,4 @@ archstabms_thermo_model_results <- function(
   write.table(coef_dt, 
     file = file.path(outpath, "model_coefficients.txt"), 
     quote = F, sep = "\t", row.names = F)
-
-  # #Add ddG significance
-  # pred_dt_conf[mut_order==1 & !duplicated(id), b_ddg_pred_sig := p.adjust(archstabms__pvalue(b_ddg_pred, b_ddg_pred_sd), method = "BH")<0.05]
-  # pred_dt_conf[mut_order==1 & !duplicated(id), f_ddg_pred_sig := p.adjust(archstabms__pvalue(f_ddg_pred, f_ddg_pred_sd), method = "BH")<0.05]
-
-  # #Save ids of singles with significant ddGs
-  # write.table(pred_dt_conf[mut_order==1 & !duplicated(id) & b_ddg_pred_sig==T,id], 
-  #   file = file.path(outpath, "b_ddg_sig_singles_id.txt"), 
-  #   quote = F, sep = "\n", row.names = F, col.names = "id")
-  # write.table(pred_dt_conf[mut_order==1 & !duplicated(id) & f_ddg_pred_sig==T,id], 
-  #   file = file.path(outpath, "f_ddg_sig_singles_id.txt"), 
-  #   quote = F, sep = "\n", row.names = F, col.names = "id")
 }

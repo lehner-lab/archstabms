@@ -40,7 +40,6 @@ archstabms_structure_metrics <- function(
 	#File names
 	pdb_ligand_file <- pdb_file
 	pdb_RSASA_file <- gsub(".pdb$", "_RSASA.pdb", pdb_file)
-	# pdb_depth_file <- gsub(".pdb$", "_residue_depth.pdb", pdb_file)
 	pdb_ss_file <- pdb_file
 	pdb_cbeta_file <- gsub(".pdb$", "_RSASA.pdb", pdb_file)
 	pdb_angle_file <- gsub(".pdb$", "_RSASA.pdb", pdb_file)
@@ -88,12 +87,6 @@ archstabms_structure_metrics <- function(
 		chain = pdb_chain_query)
 	sasa_dt <- sasa_dt[,.(Pos_ref = as.character(Pos), RSASA = bfactor)]
 
-	# #Get residue depth
-	# depth_dt <- archstabms__temperature_factor_from_PDB(
-	# 	input_file = pdb_depth_file,
-	# 	chain = pdb_chain_query)
-	# depth_dt <- depth_dt[,.(Pos_ref = as.character(Pos), depth = bfactor)]
-
 	#Get secondary structure
 	ss_dt <- archstabms__secondary_structure_from_PDB(
 		input_file = pdb_ss_file,
@@ -128,7 +121,6 @@ archstabms_structure_metrics <- function(
 	#Merge with free energies
 	dg_dt_list[['1']] <- merge(dg_dt_list[['1']], ligdist_dt[,.SD,,.SDcols = names(ligdist_dt)[names(ligdist_dt)!="Pos"]], by = "Pos_ref", all.x = T)
 	dg_dt_list[['1']] <- merge(dg_dt_list[['1']], sasa_dt[,.SD,,.SDcols = names(sasa_dt)[names(sasa_dt)!="Pos"]], by = "Pos_ref", all.x = T)
-	# dg_dt_list[['1']] <- merge(dg_dt_list[['1']], depth_dt[,.SD,,.SDcols = names(depth_dt)[names(depth_dt)!="Pos"]], by = "Pos_ref", all.x = T)
 	dg_dt_list[['1']] <- merge(dg_dt_list[['1']], ss_dt[,.SD,,.SDcols = names(ss_dt)[names(ss_dt)!="Pos"]], by = "Pos_ref", all.x = T)
 	dg_dt_list[['1']] <- merge(dg_dt_list[['1']], angle_dt[,.SD,,.SDcols = names(angle_dt)[names(angle_dt)!="Pos"]], by = "Pos_ref", all.x = T)
 	dg_dt_list[['1']] <- merge(dg_dt_list[['1']], anno_dt[,.SD,,.SDcols = names(anno_dt)[names(anno_dt)!="Pos"]], by = "Pos_ref", all.x = T)
@@ -137,15 +129,15 @@ archstabms_structure_metrics <- function(
 	dg_dt_list[['1']][RSASA<0.25, Pos_class := "core"]
 	dg_dt_list[['1']][RSASA>=0.25, Pos_class := "surface"]
 	dg_dt_list[['1']][scHAmin_ligand<5, Pos_class := "binding_interface"]
-  #Position class dict
-  pclass_dict <- as.list(dg_dt_list[['1']][,Pos_class])
-  names(pclass_dict) <- as.character(dg_dt_list[['1']][,Pos_ref])
-  #Secondary structure dict
-  ss_dict <- as.list(dg_dt_list[['1']][,SS])
-  names(ss_dict) <- as.character(dg_dt_list[['1']][,Pos_ref])
-  #Ligand distance dict
-  ld_dict <- as.list(dg_dt_list[['1']][,scHAmin_ligand])
-  names(ld_dict) <- as.character(dg_dt_list[['1']][,Pos_ref])
+	#Position class dict
+	pclass_dict <- as.list(dg_dt_list[['1']][,Pos_class])
+	names(pclass_dict) <- as.character(dg_dt_list[['1']][,Pos_ref])
+	#Secondary structure dict
+	ss_dict <- as.list(dg_dt_list[['1']][,SS])
+	names(ss_dict) <- as.character(dg_dt_list[['1']][,Pos_ref])
+	#Ligand distance dict
+	ld_dict <- as.list(dg_dt_list[['1']][,scHAmin_ligand])
+	names(ld_dict) <- as.character(dg_dt_list[['1']][,Pos_ref])
 
 	#Load free energies - order 2
 	dg_dt_list[['2']] <- dg_dt[coef_order==2]
