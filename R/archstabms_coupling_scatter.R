@@ -229,6 +229,33 @@ archstabms_coupling_scatter <- function(
     ggplot2::scale_colour_manual(values = plot_cols)
   ggplot2::ggsave(file.path(outpath, "coupling_scatter_backbone_scHAmincol_coreshape.pdf"), d, width = 4, height = 3, useDingbats=FALSE)
 
+  #Coupling scatter - scHAmin distance - backbone colour - core facet
+  plot_dt <- dg_dt[coef_order==2][!duplicated(Pos_ref),.(dddg_abs, dddg_ci, scHAmin, Pos1_class, Pos2_class, backbone)]
+  plot_dt[is.na(dddg_abs), dddg_abs := 0]
+  plot_dt[is.na(dddg_ci), dddg_ci := 0]
+  plot_dt[scHAmin<5, scHAmin_col := "<5A"]
+  plot_dt[scHAmin>=5, scHAmin_col := "5-10"]
+  plot_dt[scHAmin>=10, scHAmin_col := "10-20"]
+  plot_dt[scHAmin>=20, scHAmin_col := ">20"]
+  plot_dt[, scHAmin_col := factor(scHAmin_col, levels = c("<5A", "5-10", "10-20", ">20"))]
+  plot_dt[, Pos_class_plot := "remainder"]
+  plot_dt[Pos1_class=='core' | Pos2_class=='core', Pos_class_plot := "core"]
+  plot_dt[, Pos_class_plot := factor(Pos_class_plot, levels = c("remainder", "core"))]
+  plot_cols <- c(colour_scheme[["shade 0"]][1], colour_scheme[["shade 1"]][1], colour_scheme[["shade 1"]][3], colour_scheme[["shade 0"]][3])
+  names(plot_cols) <- c("<5A", "5-10", "10-20", ">20")
+  d <- ggplot2::ggplot(plot_dt,ggplot2::aes(backbone, dddg_abs)) +
+    ggplot2::geom_point(ggplot2::aes(color = scHAmin_col, shape = Pos_class_plot)) +
+    ggplot2::geom_linerange(data = plot_dt, ggplot2::aes(ymin = dddg_abs-dddg_ci/2, ymax = dddg_abs+dddg_ci/2, color = scHAmin_col), alpha = 1/4) +
+    ggplot2::geom_vline(xintercept = 5, linetype = 2) + 
+    ggplot2::geom_text(data = plot_dt[scHAmin>5,.(label = paste("rho = ", round(cor(dddg_abs, backbone, use = "pairwise.complete", method = 'spearman'), 2), sep="")),Pos_class_plot], ggplot2::aes(label=label, x=Inf, y=Inf, hjust = 1, vjust = 1)) +
+    ggplot2::geom_text(data = plot_dt[,.(label = paste("rho = ", round(cor(dddg_abs, backbone, use = "pairwise.complete", method = 'spearman'), 2), sep="")),Pos_class_plot], ggplot2::aes(label=label, x=Inf, y=-Inf, hjust = 1, vjust = 0)) +
+    ggplot2::xlab("Backbone distance (residues)") +
+    ggplot2::ylab(bquote("|"*.(trait) ~ Delta*Delta*Delta*"G| (kcal/mol)")) +
+    ggplot2::theme_classic() +
+    ggplot2::scale_colour_manual(values = plot_cols) +
+    ggplot2::facet_wrap(Pos_class_plot~., nrow = 2)
+  ggplot2::ggsave(file.path(outpath, "coupling_scatter_backbone_scHAmincol_coreshape_corefacet.pdf"), d, width = 4, height = 6, useDingbats=FALSE)
+
   #Coupling scatter - scHAmin distance - position class colour
   plot_dt <- dg_dt[coef_order==2][!duplicated(Pos_ref),.(dddg_abs, dddg_ci, scHAmin, Pos1_class, Pos2_class)]
   plot_dt[is.na(dddg_abs), dddg_abs := 0]

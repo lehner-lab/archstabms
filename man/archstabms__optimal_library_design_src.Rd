@@ -33,7 +33,7 @@ archstabms__optimal_library_design_src(
 
 \item{sample_size}{number of random samples (default:1000)}
 
-\item{optimal_perc}{optimal percentage maximum geometric mean growth rate (default:0.7)}
+\item{optimal_perc}{optimal percentage inverse minimum geometric mean growth rate deviation from WT (default:0.7)}
 
 \item{min_num_doubles}{minimum number of doubles per single for candidate mutations (default:20)}
 
@@ -45,5 +45,5 @@ archstabms__optimal_library_design_src(
 Nothing
 }
 \description{
-Library design.
+Library design for Src optimising WT-like abundance and activity.
 }

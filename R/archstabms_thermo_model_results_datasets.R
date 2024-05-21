@@ -4,8 +4,8 @@
 #' Evaluate thermo model results of multiple datasets.
 #'
 #' @param dataset_names character vector of dataset names (required)
-#' @param literature_free_energies path to literature free energies (required)
-#' @param ddPCA_free_energies path to ddPCA free energies (default:NA)
+#' @param literature_free_energies_list list of paths to literature free energies (default:list())
+#' @param ddPCA_free_energies list of paths to ddPCA free energies (default:list())
 #' @param base_dir Base directory (required)
 #' @param output_dir Output directory (required)
 #' @param stagenum stage number (required)
@@ -16,8 +16,8 @@
 #' @export
 archstabms_thermo_model_results_datasets <- function(
   dataset_names,
-  literature_free_energies,
-  ddPCA_free_energies,
+  literature_free_energies_list = list(),
+  ddPCA_free_energies_list = list(),
   base_dir,
   output_dir,
   stagenum,
@@ -34,71 +34,62 @@ archstabms_thermo_model_results_datasets <- function(
     #order 1
     archstabms_thermo_model_results(
       mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o1")),
-      literature_free_energies = literature_free_energies,
-      ddPCA_free_energies = ddPCA_free_energies,
+      ddPCA_free_energies = ddPCA_free_energies_list[[i]],
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o1"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme,
       execute = execute)
     #order 1 -linear
     archstabms_thermo_model_results(
       mochi_outpath = file.path(base_dir, paste0("001_archstabms_linear_model_", i, "o1")),
-      literature_free_energies = literature_free_energies,
-      ddPCA_free_energies = ddPCA_free_energies,
+      ddPCA_free_energies = ddPCA_free_energies_list[[i]],
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o1-linear"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme,
       execute = execute)
     #order 1 -ddPCA single background linear
     archstabms_thermo_model_results(
       mochi_outpath = file.path(base_dir, paste0("001_archstabms_ddPCA_singlebackground_linear_model_", i, "o1")),
-      literature_free_energies = literature_free_energies,
-      ddPCA_free_energies = ddPCA_free_energies,
+      ddPCA_free_energies = ddPCA_free_energies_list[[i]],
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o1-ddPCAsinglebackgroundlinear"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme,
       execute = execute)
     #order 1 -ddPCA linear
     archstabms_thermo_model_results(
       mochi_outpath = file.path(base_dir, paste0("001_archstabms_ddPCA_linear_model_", i, "o1")),
-      literature_free_energies = literature_free_energies,
-      ddPCA_free_energies = ddPCA_free_energies,
+      ddPCA_free_energies = ddPCA_free_energies_list[[i]],
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o1-ddPCAlinear"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme,
       execute = execute)
     #order 1 -ddPCA biophysical
     archstabms_thermo_model_results(
       mochi_outpath = file.path(base_dir, paste0("001_archstabms_ddPCA_biophysical_model_", i, "o1")),
-      literature_free_energies = literature_free_energies,
-      ddPCA_free_energies = ddPCA_free_energies,
+      ddPCA_free_energies = ddPCA_free_energies_list[[i]],
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o1-ddPCA"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme,
       execute = execute)
     #order 2
     archstabms_thermo_model_results(
       mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o2")),
-      literature_free_energies = literature_free_energies,
-      ddPCA_free_energies = ddPCA_free_energies,
+      ddPCA_free_energies = ddPCA_free_energies_list[[i]],
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o2"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme,
       execute = execute)
     #order 2 -linear
     archstabms_thermo_model_results(
       mochi_outpath = file.path(base_dir, paste0("001_archstabms_linear_model_", i, "o2")),
-      literature_free_energies = literature_free_energies,
-      ddPCA_free_energies = ddPCA_free_energies,
+      ddPCA_free_energies = ddPCA_free_energies_list[[i]],
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o2-linear"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme,
       execute = execute)
     #order 3
     archstabms_thermo_model_results(
       mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o3")),
-      literature_free_energies = literature_free_energies,
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o3"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme,
       execute = execute)
     #order 3 -linear
     archstabms_thermo_model_results(
       mochi_outpath = file.path(base_dir, paste0("001_archstabms_linear_model_", i, "o3")),
-      literature_free_energies = literature_free_energies,
-      ddPCA_free_energies = ddPCA_free_energies,
+      ddPCA_free_energies = ddPCA_free_energies_list[[i]],
       outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o3-linear"), stagenum=stagenum, base_dir=output_dir),
       colour_scheme = colour_scheme,
       execute = execute)
@@ -106,42 +97,36 @@ archstabms_thermo_model_results_datasets <- function(
     # #order 1 - ensemble
     # archstabms_thermo_model_results(
     #   mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o1-ensemble")),
-    #   literature_free_energies = literature_free_energies,
     #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o1-ensemble"), stagenum=stagenum, base_dir=output_dir),
     #   colour_scheme = colour_scheme,
     #   execute = execute)
     # #order 1 -linear - ensemble
     # archstabms_thermo_model_results(
     #   mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o1-linear-ensemble")),
-    #   literature_free_energies = literature_free_energies,
     #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o1-linear-ensemble"), stagenum=stagenum, base_dir=output_dir),
     #   colour_scheme = colour_scheme,
     #   execute = execute)
     # #order 2 - ensemble
     # archstabms_thermo_model_results(
     #   mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o2-ensemble")),
-    #   literature_free_energies = literature_free_energies,
     #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o2-ensemble"), stagenum=stagenum, base_dir=output_dir),
     #   colour_scheme = colour_scheme,
     #   execute = execute)
     # #order 2 -linear - ensemble
     # archstabms_thermo_model_results(
     #   mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o2-linear-ensemble")),
-    #   literature_free_energies = literature_free_energies,
     #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o2-linear-ensemble"), stagenum=stagenum, base_dir=output_dir),
     #   colour_scheme = colour_scheme,
     #   execute = execute)
     # #order 3 - ensemble
     # archstabms_thermo_model_results(
     #   mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o3-ensemble")),
-    #   literature_free_energies = literature_free_energies,
     #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o3-ensemble"), stagenum=stagenum, base_dir=output_dir),
     #   colour_scheme = colour_scheme,
     #   execute = execute)
     # #order 3 -linear - ensemble
     # archstabms_thermo_model_results(
     #   mochi_outpath = file.path(base_dir, "Data", "mochi", paste0(i, "o3-linear-ensemble")),
-    #   literature_free_energies = literature_free_energies,
     #   outpath = archstabms__format_dir(dir_suffix=paste0("_archstabms_thermo_model_results_", i, "o3-linear-ensemble"), stagenum=stagenum, base_dir=output_dir),
     #   colour_scheme = colour_scheme,
     #   execute = execute)

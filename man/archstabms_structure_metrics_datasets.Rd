@@ -6,7 +6,7 @@
 \usage{
 archstabms_structure_metrics_datasets(
   dataset_names,
-  pdb_file,
+  pdb_file_list,
   base_dir,
   output_dir,
   stagenum,
@@ -16,7 +16,7 @@ archstabms_structure_metrics_datasets(
 \arguments{
 \item{dataset_names}{character vector of dataset names (required)}
 
-\item{pdb_file}{path to PDB file (required)}
+\item{pdb_file_list}{list of paths to PDB files (required)}
 
 \item{base_dir}{Base directory (required)}
 

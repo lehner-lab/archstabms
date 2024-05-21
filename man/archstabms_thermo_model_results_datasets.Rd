@@ -6,8 +6,8 @@
 \usage{
 archstabms_thermo_model_results_datasets(
   dataset_names,
-  literature_free_energies,
-  ddPCA_free_energies,
+  literature_free_energies_list = list(),
+  ddPCA_free_energies_list = list(),
   base_dir,
   output_dir,
   stagenum,
@@ -18,9 +18,7 @@ archstabms_thermo_model_results_datasets(
 \arguments{
 \item{dataset_names}{character vector of dataset names (required)}
 
-\item{literature_free_energies}{path to literature free energies (required)}
-
-\item{ddPCA_free_energies}{path to ddPCA free energies (default:NA)}
+\item{literature_free_energies_list}{list of paths to literature free energies (default:list())}
 
 \item{base_dir}{Base directory (required)}
 
@@ -31,6 +29,8 @@ archstabms_thermo_model_results_datasets(
 \item{colour_scheme}{colour scheme file (required)}
 
 \item{execute}{whether or not to execute the analysis (default: TRUE)}
+
+\item{ddPCA_free_energies}{list of paths to ddPCA free energies (default:list())}
 }
 \value{
 Nothing

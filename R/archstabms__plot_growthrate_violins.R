@@ -25,11 +25,15 @@ archstabms__plot_growthrate_violins <- function(
   ){
 
   #Abundance growthrate violins with hamming distance
-  plot_dt <- copy(input_dt)
+  plot_dt <- copy(input_dt)[is.na(WT)][order(Nham_aa, decreasing = F)]
+  #Remove singleton hamming distances
+  retained_ham <- plot_dt[,.(count = .N),Nham_aa][count!=1,Nham_aa]
+  plot_dt <- plot_dt[Nham_aa %in% retained_ham]
   plot_dt[, mut_order := as.factor(Nham_aa)]
   #Maximum mut_order in violin plot
   text_dt <- plot_dt[is.na(WT),.(label = round(sum(growthrate>threshold)/.N*100, 0), growthrate = 0.17),mut_order]
   cc <- scales::seq_gradient_pal(colour_scheme[["shade 0"]][3], colour_scheme[["shade 0"]][1], "Lab")(seq(0,1,length.out=plot_dt[, max(Nham_aa)]))
+  names(cc) <- plot_dt[,unique(Nham_aa)]
   # d <- ggplot2::ggplot(plot_dt[is.na(WT) & Nham_aa<29],ggplot2::aes(mut_order, growthrate, fill = mut_order, color = mut_order)) +
   d <- ggplot2::ggplot(plot_dt[is.na(WT)],ggplot2::aes(mut_order, growthrate, fill = mut_order, color = mut_order)) +
     ggplot2::geom_violin() +
@@ -48,7 +52,9 @@ archstabms__plot_growthrate_violins <- function(
 
   #Abundance growthrate histograms vs hamming distance
   plot_dt <- input_dt[is.na(WT),.(count = .N), Nham_aa]
-  plot_dt[, mut_order := as.factor(Nham_aa)]
+  #Remove singleton hamming distances
+  plot_dt <- plot_dt[count!=1]
+  plot_dt[order(Nham_aa, decreasing = F), mut_order := as.factor(Nham_aa)]
   d <- ggplot2::ggplot(plot_dt,ggplot2::aes(mut_order, count)) +
     ggplot2::geom_bar(stat = "identity", ggplot2::aes()) +
     ggplot2::xlab("AA substitution order") +

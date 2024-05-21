@@ -190,7 +190,7 @@ archstabms__optimal_library_design <- function(
 		#Prepare table of all computed values and store
 		total <- merge(
 			melt(folding_median_values, measure.vars = mutations_id, variable.name = "mutation", value.name = "folding"),
-			melt(binding_median_values, measure.vars = mutations_id, variable.name = "mutation", value.name = "folding"), 
+			melt(binding_median_values, measure.vars = mutations_id, variable.name = "mutation", value.name = "binding"), 
 			by=c("number_of_mutants","mutation"))
 		names(total) <- c("mutant_order","mutation", "Abundance", "Binding")
 		#Set minimum growth rate to zero
