@@ -184,6 +184,12 @@ archstabms_binding_plots <- function(
       coef_dt[trait_name=="Folding", abs(.SD[[1]]),,.SDcols = "mean_kcal/mol"],
       coef_dt[trait_name=="Binding", abs(.SD[[1]]),,.SDcols = "mean_kcal/mol"])
     print(paste0("Magnitude of folding ddGs larger than binding ddGs (", dataset_name, "): Mann-Whitney U test P=", test_results[['p_value']], ", AUC=", test_results[['effect_size']], ", n=", coef_dt[,.N]))
+    test_results <- list(
+      "folding_mean" = coef_dt[trait_name=="Folding", mean(abs(.SD[[1]])),,.SDcols = "mean_kcal/mol"],
+      "folding_sd" = coef_dt[trait_name=="Folding", sd(abs(.SD[[1]])),,.SDcols = "mean_kcal/mol"],
+      "binding_mean" = coef_dt[trait_name=="Binding", mean(abs(.SD[[1]])),,.SDcols = "mean_kcal/mol"],
+      "binding_sd" = coef_dt[trait_name=="Binding", sd(abs(.SD[[1]])),,.SDcols = "mean_kcal/mol"])
+    print(paste0("Magnitude of folding ddGs larger than binding ddGs (", dataset_name, "): Folding mean=", test_results[['folding_mean']], ", Folding sd=", test_results[['folding_sd']], ", Binding mean=", test_results[['binding_mean']], ", Binding sd=", test_results[['binding_sd']]))
 
     plot_dt <- merge(
       coef_dt[trait_name=='Folding',.(id_ref, ddg = .SD[[2]], ddg_ci = .SD[[3]]),,.SDcols = c("id_ref", "mean_kcal/mol", "ci95_kcal/mol")],

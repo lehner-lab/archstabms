@@ -350,6 +350,21 @@ archstabms_coupling_scatter <- function(
 		ggplot2::scale_colour_viridis_c(option = "plasma")
   ggplot2::ggsave(file.path(outpath, "coupling_scatter_backbone.pdf"), d, width = 4, height = 3, useDingbats=FALSE)
 
+	#Coupling scatter - backbone distance (excluding closest backbone distance)
+	plot_dt <- dg_dt[coef_order==2][!duplicated(Pos_ref),.(dddg_abs, dddg_ci, backbone, scHAmin)][backbone!=min(backbone)]
+	plot_dt[is.na(dddg_abs), dddg_abs := 0]
+	plot_dt[is.na(dddg_ci), dddg_ci := 0]
+  d <- ggplot2::ggplot(plot_dt,ggplot2::aes(backbone, dddg_abs)) +
+    ggplot2::geom_point(ggplot2::aes(color = scHAmin)) +
+    ggplot2::geom_linerange(data = plot_dt, ggplot2::aes(ymin = dddg_abs-dddg_ci/2, ymax = dddg_abs+dddg_ci/2, color = scHAmin), alpha = 1/4) +
+    ggplot2::geom_vline(xintercept = 5, linetype = 2) + 
+    ggplot2::geom_text(data = plot_dt[,.(label = paste("rho = ", round(cor(dddg_abs, backbone, use = "pairwise.complete", method = 'spearman'), 2), sep=""))], ggplot2::aes(label=label, x=Inf, y=Inf, hjust = 1, vjust = 1)) +
+    ggplot2::xlab("Backbone distance (residues)") +
+    ggplot2::ylab(bquote("|"*.(trait) ~ Delta*Delta*Delta*"G| (kcal/mol)")) +
+    ggplot2::theme_classic() +
+		ggplot2::scale_colour_viridis_c(option = "plasma")
+  ggplot2::ggsave(file.path(outpath, "coupling_scatter_backbone_exclclosest.pdf"), d, width = 4, height = 3, useDingbats=FALSE)
+
 	#Coupling scatter - backbone distance no contact
 	plot_dt <- dg_dt[coef_order==2 & scHAmin>=5][!duplicated(Pos_ref),.(dddg_abs, dddg_ci, backbone, scHAmin)]
 	plot_dt[is.na(dddg_abs), dddg_abs := 0]
@@ -414,6 +429,23 @@ archstabms_coupling_scatter <- function(
       ggplot2::theme_classic() +
       ggplot2::coord_cartesian(ylim = c(0, 1))
     ggplot2::ggsave(file.path(outpath, "coupling_scatter_backbone_boxplot.pdf"), d, width = 4, height = 3, useDingbats=FALSE)
+
+    #Coupling scatter - backbone distance (excluding closest backbone distance)
+    plot_dt <- dg_dt[coef_order==2][,.(dddg_abs_mut, backbone, scHAmin)][backbone!=min(backbone)]
+    plot_dt[is.na(dddg_abs_mut), dddg_abs_mut := 0]
+    plot_dt[, scHAmin_col := as.character(round(scHAmin, 1))]
+    cc <- c(colour_scheme[["shade 2"]][3], colour_scheme[["shade 1"]][3], colour_scheme[["shade 1"]][1], colour_scheme[["shade 2"]][1], colour_scheme[["shade 0"]][1])
+    names(cc) <- unique(plot_dt[order(scHAmin, decreasing = T),scHAmin_col])
+    d <- ggplot2::ggplot(plot_dt,ggplot2::aes(as.factor(backbone), dddg_abs_mut)) +
+      ggplot2::geom_boxplot(ggplot2::aes(fill = scHAmin_col), notch = T, outlier.shape = NA) +
+      ggplot2::scale_fill_manual(values = cc) +
+      ggplot2::geom_text(data = plot_dt[,.(label = paste("rho = ", round(cor(dddg_abs_mut, backbone, use = "pairwise.complete", method = 'spearman'), 2), sep=""))], ggplot2::aes(label=label, x=Inf, y=Inf, hjust = 1, vjust = 1)) +
+      ggplot2::xlab("Backbone distance (residues)") +
+    ggplot2::ylab(bquote("|"*.(trait) ~ Delta*Delta*Delta*"G| (kcal/mol)")) +
+      ggplot2::theme_classic() +
+      ggplot2::coord_cartesian(ylim = c(0, 1))
+    ggplot2::ggsave(file.path(outpath, "coupling_scatter_backbone_boxplot_exclclosest.pdf"), d, width = 4, height = 3, useDingbats=FALSE)
+
   }
 
   return(dg_dt)
