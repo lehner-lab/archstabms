@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/635718168.svg)](https://zenodo.org/doi/10.5281/zenodo.11671164)
+
 Welcome to the GitHub repository for the following publication: [The genetic architecture of protein stability (Faure AJ et al., 2023)](https://www.biorxiv.org/content/10.1101/2023.10.27.564339)
 
 Here you'll find an R package with all scripts to reproduce the figures and results from the computational analyses described in the paper.
