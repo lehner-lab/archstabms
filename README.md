@@ -17,6 +17,8 @@ To run the archstabms pipeline you will need the following software and associat
 
 * **[_R_](https://www.r-project.org/)** (Biostrings, Cairo, bio3d, data.table, GGally, ggplot2, ggrepel, hexbin, plot3D, ppcor, reshape2, reticulate, ROCR, scales)
 
+The software has been tested using [_R_](https://www.r-project.org/) v4.2.0.
+
 # Required Data
 
 Fitness scores, inferred free energy changes and required miscellaneous files should be downloaded from **[here](https://crgcnag-my.sharepoint.com/:u:/g/personal/afaure_crg_es/EY1-AzOLNmBAqNQ7-0aOt7cB239VQ85UUBPFV5IP4qEwdA?e=cESrqC)** and unzipped in your project directory (see 'base_dir' option) i.e. where output files should be written.
